@@ -1,9 +1,9 @@
-import { AbsoluteFill, Img, useCurrentFrame, useVideoConfig, spring, staticFile } from 'remotion';
+import { AbsoluteFill, Img, useCurrentFrame, useVideoConfig, spring, staticFile, Audio, Sequence } from 'remotion';
 import React from 'react';
+import { Subtitle } from './Subtitle';
+
 // Image will be loaded from public/pizza.png 
-// Actually for public folder assets in Remotion, we usually use staticString or calculate path. 
-// But simplest is to just use string path for now or import if we use bundler support.
-// Let's use static path string for simplicity in typical public folder usage.
+// Audio will be loaded from public/music.mp4
 
 export const MyComposition = () => {
     const frame = useCurrentFrame();
@@ -23,11 +23,20 @@ export const MyComposition = () => {
                 backgroundColor: 'white',
             }}
         >
+            <Audio src={staticFile("music.mp4")} />
+
             <div style={{ transform: `scale(${scale})` }}>
-                {/* Attempting to load pizza.png from public folder. 
-            User needs to place pizza.png in public folder. */}
+                {/* User needs to place pizza.png in public folder. */}
                 <Img src={staticFile("pizza.png")} style={{ width: '80%' }} />
             </div>
+
+            <Sequence from={0} durationInFrames={150}>
+                <Subtitle text="美味しいぞ～" />
+            </Sequence>
+
+            <Sequence from={150} durationInFrames={150}>
+                <Subtitle text="いえ～い" />
+            </Sequence>
         </AbsoluteFill>
     );
 };
